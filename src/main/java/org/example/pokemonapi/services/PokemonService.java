@@ -33,7 +33,7 @@ public class PokemonService {
 
                         pokemonReturn.setId(pokemon1.getId());
                         pokemonReturn.setName(pokemon1.getName());
-                        pokemonReturn.setTypes(pokemon1.getTypes().stream().map(a -> this.converterParaB(a)).collect(Collectors.toList()));
+                        pokemonReturn.setTypes(pokemon1.getTypes().stream().map(a -> new Name(a.getType().getName())).collect(Collectors.toList()));
                         pokemonReturn.setMiniature(pokemon1.getSprites().getFront_default());
 
                     } catch (IOException | InterruptedException e) {
@@ -45,14 +45,6 @@ public class PokemonService {
 
         data.setResults(poke);
         return data;
-    }
-
-    // Exemplo de método para converter um objeto do tipo A em um objeto do tipo B
-    public static Name converterParaB(Types A) {
-        // Implemente a lógica para converter um objeto do tipo A em um objeto do tipo B
-
-       return A.getType().getName();
-
     }
 
     public Pokemon buscarPokemon(String nome) throws IOException, InterruptedException {
