@@ -1,19 +1,53 @@
 package org.example.pokemonapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Pokemon {
-
+    @JsonProperty("id")
     private Integer id;
+    @JsonProperty("name")
     private String name;
     private List<Types> types;
-    private Sprite sprites;
+    private Sprites sprites;
+    private List<Abilities> abilities;
+    private Integer weight;
 
-    public Sprite getSprites() {
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    private Integer height;
+
+    public List<Abilities> getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(List<Abilities> abilities) {
+        this.abilities = abilities;
+    }
+
+
+    public Sprites getSprites() {
         return sprites;
     }
 
-    public void setSprites(Sprite sprites) {
+    public void setSprites(Sprites sprites) {
         this.sprites = sprites;
     }
 
@@ -22,15 +56,15 @@ public class Pokemon {
     }
 
     public void setId(Integer id) {
-        id = id;
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String nome) {
-        nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Types> getTypes() {

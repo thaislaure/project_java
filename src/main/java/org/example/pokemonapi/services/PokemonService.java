@@ -1,5 +1,6 @@
 package org.example.pokemonapi.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.example.pokemonapi.models.*;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,10 +54,34 @@ public class PokemonService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Pokemon data = new Gson().fromJson(response.body(), Pokemon.class);
+        /*
+        Gson gson = new Gson();
+        return new Gson().fromJson(response.body(), Pokemon.class);
+        */
 
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(response.body(), Pokemon.class);
+    }
 
-        return data;
+    public PokemonGet pokemon(String nome) throws IOException, InterruptedException {
+
+        Pokemon pokemon1 = null;
+        PokemonGet pokemonReturn = new PokemonGet();
+        try {
+            pokemon1 = this.buscarPokemon(nome);
+
+            pokemonReturn.setId(pokemon1.getId());
+            pokemonReturn.setName(pokemon1.getName());
+            pokemonReturn.setAbilities(pokemon1.getAbilities());
+            pokemonReturn.setImage(pokemon1.getSprites().getOther().getOfficialArtwork().getFrontDefault());
+            pokemonReturn.setHeight(pokemon1.getHeight());
+            pokemonReturn.setWeight(pokemon1.getWeight());
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return pokemonReturn;
+
     }
 
 }
